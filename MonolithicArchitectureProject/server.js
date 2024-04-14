@@ -5,9 +5,15 @@ const express = require('express');
 const { Pool } = require('pg');
 const http = require('http');
 const httpProxy = require('http-proxy');
+const bodyParser = require('body-parser');
 dotnev.config();
 const app = express();
 const port = 3000;
+app.set('view engine', 'hbs');
+app.use(express.static('./public'));
+app.set('views','./public/views');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // PostgreSQL veritabanı yapılandırması
 const pool = new Pool({
@@ -18,23 +24,44 @@ const pool = new Pool({
     port: process.env.DB_PORT
 });
 
-// Middleware kullanarak JSON isteklerini işleyin
-app.use(express.json());
+// Anasayfa
+app.get('', async (req, res) => {
+  res.render('index',{
+    users : await getUsers(),
+    books : await getBooks(), 
+    authors :  await getAuthors()
+  });
+});
 
 // GET isteği için örnek bir endpoint
 app.get('/users', async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM users');
-    res.json(result.rows);
+    getUsers().then((result) => {
+      res.json(result);
+    });
   } catch (error) {
     console.error('Hata:', error.message);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+// Kullanıcıları getir
+const getUsers = async () => {
+    try {
+      const result = await pool.query('SELECT * FROM users');
+      return result.rows;
+    } catch (error) {
+      console.error('Hata:', error.message);
+      return [];
+    }
+};
 
 // POST isteği için örnek bir endpoint
-app.post('/users', async (req, res) => {
-  const { username, email } = req.body;
+app.post('/users/create', async (req, res) => {
+  const username = req.body.username;
+  const email = req.body.email;
+  if (!username) {
+    return res.status(400).json({ error: 'Username is required' });
+  }
   try {
     const result = await pool.query('INSERT INTO users (username, email) VALUES ($1, $2) RETURNING *', [username, email]);
     res.json(result.rows[0]);
@@ -42,7 +69,7 @@ app.post('/users', async (req, res) => {
     console.error('Hata:', error.message);
     res.status(500).json({ error: 'Internal Server Error' });
   }
-});
+}); 
 
 // Get isteği için örnek bir endpoint
 app.get('/users/:id', async (req, res) => {
@@ -58,17 +85,27 @@ app.get('/users/:id', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-
 // Get isteği için örnek bir endpoint
 app.get('/books', async (req, res) => {
     try {
-      const result = await pool.query('SELECT * FROM books');
-      res.json(result.rows);
+      getBooks().then((result) => {
+        res.json(result);
+      });
     } catch (error) {
       console.error('Hata:', error.message);
       res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+// Kitapları getir
+const getBooks = async () => {
+    try {
+      const result = await pool.query('SELECT * FROM books');
+      return result.rows;
+    } catch (error) {
+      console.error('Hata:', error.message);
+      return [];
+    }
+}
 
 // Post isteği için örnek bir endpoint
 app.post('/books', async (req, res) => {
@@ -85,13 +122,24 @@ app.post('/books', async (req, res) => {
 // Get isteği için örnek bir endpoint
 app.get('/authors', async (req, res) => {
     try {
-      const result = await pool.query('SELECT * FROM authors');
-      res.json(result.rows);
+      getAuthors().then((result) => {
+        res.json(result);
+      });
     } catch (error) {
       console.error('Hata:', error.message);
       res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+// Yazarları getir
+const getAuthors = async () => {
+    try {
+      const result = await pool.query('SELECT * FROM authors');
+      return result.rows;
+    } catch (error) {
+      console.error('Hata:', error.message);
+      return [];
+    }
+}
 
 // Post isteği için örnek bir endpoint
 app.post('/authors', async (req, res) => {
@@ -135,6 +183,7 @@ const loadBalancer = http.createServer((req, res) => {
     target: `http://${target.host}:${target.port}`
   });
 });
+
 
 // Load balancer'ı dinlemeye başla
 loadBalancer.listen(8080, () => {

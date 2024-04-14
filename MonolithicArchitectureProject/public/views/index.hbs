@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <title>Monolithic Architecture Project</title>
+    </head>
+    <body>
+        <h1>Monolithic Architecture Project</h1>
+        <p>Welcome to the Monolithic Architecture Project!</p>
+        <h>User Create</h>
+        <form action="/users/create" method="post" enctype="application/x-www-form-urlencoded">
+            <label for="username">Name:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <button type="submit">Create</button>
+        </form>
+        <h>Users</h>
+        <ul>
+            {{#each users}}
+                <li>{{username}} ({{email}})</li>
+            {{/each}}
+        </ul>
+        <h>Book Create</h>
+        <form action="/books" method="post">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+            <label for="author">Author:</label>
+            <input type="text" id="author" name="author" required>
+            <button type="submit">Create</button>
+        </form>
+        <h>Books</h>
+        <ul>
+            {{#each books}}
+                <li>{{this.title}} ({{this.author}})</li>
+            {{/each}}
+        </ul>
+        <h>Author Create</h>
+        <form action="/authors" method="post">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="email">Country:</label>
+            <input type="text" id="country" name="country" required>
+            <button type="submit">Create</button>
+        </form>
+        <h>Authors</h>
+        <ul>
+            {{#each authors}}
+                <li>{{this.name}} ({{this.country}})</li>
+            {{/each}}
+        </ul>
+    </body>
+
+</html>
