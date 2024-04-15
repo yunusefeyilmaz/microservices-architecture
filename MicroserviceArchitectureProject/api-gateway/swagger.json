@@ -1,0 +1,55 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Microservices API",
+      "description": "API documentation for Microservices Project"
+    },
+    "servers": [
+      {
+        "url": "http://127.0.0.1:8080",
+        "description": "Local Server"
+      }
+    ],
+    "paths": {
+      "/users": {
+        "get": {
+          "summary": "Get all users",
+          "responses": {
+            "200": {
+              "description": "Successful operation"
+            }
+          }
+        },
+        "post": {
+          "summary": "Create a new user",
+          "responses": {
+            "200": {
+              "description": "Successful operation"
+            }
+          }
+        }
+      },
+      "/books": {
+        "get": {
+          "summary": "Get all books",
+          "responses": {
+            "200": {
+              "description": "Successful operation"
+            }
+          }
+        }
+      },
+      "/authors": {
+        "post": {
+          "summary": "Create a new author",
+          "responses": {
+            "200": {
+              "description": "Successful operation"
+            }
+          }
+        }
+      }
+    }
+  }
+  

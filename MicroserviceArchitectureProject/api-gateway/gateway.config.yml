@@ -1,0 +1,21 @@
+http:
+  apiEndpoints:
+    users:
+      paths: '/users*'
+      methods: ['GET', 'POST']
+      serviceEndpoint: 'kullanici-servisi'
+    books:
+      paths: '/books*'
+      methods: ['GET']
+      serviceEndpoint: 'kitap-servisi'
+    authors:
+      paths: '/authors*'
+      methods: ['POST']
+      serviceEndpoint: 'yazar-servisi'
+  serviceEndpoints:
+    kullanici-servisi:
+      url: 'http://kullanici-servisi:3001/'
+    kitap-servisi:
+      url: 'http://kitap-servisi:3002/' 
+    yazar-servisi:
+      url: 'http://yazar-servisi:3003/' 
