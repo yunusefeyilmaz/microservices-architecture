@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - kullanici-servisi
+      - kitap-servisi
+      - yazar-servisi
+
+  kullanici-servisi:
+    build: ./kullanici-servisi
+    ports:
+      - "3001:3001"
+
+  kitap-servisi:
+    build: ./kitap-servisi
+    ports:
+      - "3002:3002"
+
+  yazar-servisi:
+    build: ./yazar-servisi
+    ports:
+      - "3003:3003"
