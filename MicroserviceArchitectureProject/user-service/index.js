@@ -4,17 +4,11 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 const port = 3001;
-// Örnek kullanıcı veritabanı
+
+const dotenv = require('dotenv');
+dotenv.config();
+
 let users = [];
-/**
- * @swagger
- * /users:
- *   get:
- *     description: Tüm kullanıcıları getirir
- *     responses:
- *       200:
- *         description: Başarılı işlem
- */
 
 // Tüm kullanıcıları listeleme
 app.get('/users', (req, res) => {
