@@ -5,27 +5,26 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 const port = 3001;
 
-const dotenv = require('dotenv');
-dotenv.config();
+const DAuser = require('./DAUser');
 
-let users = [];
-
-// Tüm kullanıcıları listeleme
+// Get all users
 app.get('/users', (req, res) => {
     try {
-        console.log('Kullanıcılar listeleniyor');
+        console.log('List users request received');
+        const users = DAuser.getUsers();
         res.json(users);
     } catch (error) {
         console.log(error);
     }
 });
 
+// Add a new user
 app.post('/users', (req, res) => {
     try{
-        console.log('Kullanıcı ekleme isteği alındı');
+        console.log('Add user request received');
         const { username, email } = req.body;
         const newUser = { id: users.length + 1, username, email };
-        users.push(newUser);
+        DAuser.addUser(username, email);
         res.status(201).json(newUser);
     } catch (error) {
         console.log(error);
@@ -33,8 +32,9 @@ app.post('/users', (req, res) => {
 
 });
 
+// Listen
 app.listen(port, () => {
-    console.log(`Kullanıcı Servisi http://127.0.0.1:${port} adresinde çalışıyor`);
+    console.log(`User service listening at http://localhost:${port}`);
 });
 
 process.on('uncaughtException', function (err) {
