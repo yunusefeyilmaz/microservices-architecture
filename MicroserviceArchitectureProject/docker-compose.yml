@@ -6,21 +6,21 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - kullanici-servisi
-      - kitap-servisi
-      - yazar-servisi
+      - user-service
+      - book-service
+      - author-service
 
-  kullanici-servisi:
-    build: ./kullanici-servisi
+  user-service:
+    build: ./user-service
     ports:
       - "3001:3001"
 
-  kitap-servisi:
-    build: ./kitap-servisi
+  book-service:
+    build: ./book-service
     ports:
       - "3002:3002"
 
-  yazar-servisi:
-    build: ./yazar-servisi
+  author-service:
+    build: ./author-service
     ports:
       - "3003:3003"
