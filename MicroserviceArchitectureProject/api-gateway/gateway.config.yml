@@ -3,19 +3,19 @@ http:
     users:
       paths: '/users*'
       methods: ['GET', 'POST']
-      serviceEndpoint: 'kullanici-servisi'
+      serviceEndpoint: 'user-service'
     books:
       paths: '/books*'
       methods: ['GET']
-      serviceEndpoint: 'kitap-servisi'
+      serviceEndpoint: 'book-service'
     authors:
       paths: '/authors*'
       methods: ['POST']
-      serviceEndpoint: 'yazar-servisi'
+      serviceEndpoint: 'author-service'
   serviceEndpoints:
-    kullanici-servisi:
-      url: 'http://kullanici-servisi:3001/'
-    kitap-servisi:
-      url: 'http://kitap-servisi:3002/' 
-    yazar-servisi:
-      url: 'http://yazar-servisi:3003/' 
+    user-service:
+      url: 'http://user-service:3001/'
+    book-service:
+      url: 'http://book-service:3002/' 
+    author-service:
+      url: 'http://author-service:3003/' 
