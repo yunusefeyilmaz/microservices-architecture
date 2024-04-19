@@ -1,21 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
-// Express uygulamasını oluştur
 const app = express();
 const port = 3002;
-
-// JSON verileri için body-parser'ı etkinleştir
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Örnek kitap veritabanı
-let books = [];
+const DABook = require('./DABook');
 
-// Tüm kitapları listeleme
+// Get all books
 app.get('/books', (req, res) => {
     try {
-        console.log('Kitaplar listeleniyor');
+        console.log('List books request received');
+        const books = DABook.getBooks();
         res.json(books);
     } catch (error) {
         console.log(error);
@@ -23,13 +19,13 @@ app.get('/books', (req, res) => {
     }
 });
 
-// Yeni kitap ekleme
+// Add a new book
 app.post('/books', (req, res) => {
     try {
-        console.log('Kitap ekleme isteği alındı');
+        console.log('Add book request received');
         const { title, author } = req.body;
         const newBook = { id: books.length + 1, title, author };
-        books.push(newBook);
+        DABook.addBook(title, author);
         res.status(201).json(newBook);
     } catch (error) {
         console.log(error);
@@ -37,8 +33,9 @@ app.post('/books', (req, res) => {
     }
 });
 
+// Listen
 app.listen(port, () => {
-    console.log(`Kitap Servisi http://127.0.0.1:${port} adresinde çalışıyor`);
+    console.log(`Book service listening at http://localhost:${port}`);
 });
 
 process.on('uncaughtException', function (err) {
