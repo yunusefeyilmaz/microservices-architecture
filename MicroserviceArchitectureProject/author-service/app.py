@@ -1,32 +1,35 @@
 from flask import Flask, request, jsonify
 
+
 app = Flask(__name__)
 
-authors = []
+from DAAuthor import DAAuthor 
 
-
-app.route('/')
+da_author = DAAuthor(app)
+@app.route('/')
 def home():
-    return 'Yazar Servisi'
+    return 'Author Service'
 
+# Get the authors from the database
 @app.route('/authors', methods=['GET'])
 def get_authors():
     try:
-        print('Yazarlar listeleniyor')
+        print('List of authors requested')
+        authors = da_author.get_authors()
         return jsonify(authors), 200
     except Exception as e:
         print(e)
         return jsonify({'error': 'Internal Server Error'}), 500
 
+# Add an author to the database
 @app.route('/authors', methods=['POST'])
 def add_author():
     try:
-        print('Yazar ekleme isteği alındı')
+        print('Author creation requested')
         data = request.json
         name = data.get('name')
         nationality = data.get('nationality')
-        new_author = {'id': len(authors) + 1, 'name': name, 'nationality': nationality}
-        authors.append(new_author)
+        new_author= da_author.add_author(name=name,nationality=nationality)
         return jsonify(new_author), 200
     except Exception as e:
         print(e)
