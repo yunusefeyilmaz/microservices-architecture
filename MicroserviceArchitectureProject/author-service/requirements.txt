@@ -1,3 +1,5 @@
 requests
-flask
-flask-mysql
+flask==2.2.2
+Werkzeug==2.2.2
+mysql-connector-python
+python-dotenv
