@@ -8,10 +8,10 @@ const port = 3001;
 const DAuser = require('./DAUser');
 
 // Get all users
-app.get('/users', (req, res) => {
+app.get('/users', async (req, res) => {
     try {
         console.log('List users request received');
-        const users = DAuser.getUsers();
+        const users = await DAuser.getUsers();
         res.json(users);
     } catch (error) {
         console.log(error);
@@ -19,12 +19,12 @@ app.get('/users', (req, res) => {
 });
 
 // Add a new user
-app.post('/users', (req, res) => {
+app.post('/users', async (req, res) => {
     try{
         console.log('Add user request received');
         const { username, email } = req.body;
         const newUser = { id: users.length + 1, username, email };
-        DAuser.addUser(username, email);
+        await DAuser.addUser(username, email);
         res.status(201).json(newUser);
     } catch (error) {
         console.log(error);

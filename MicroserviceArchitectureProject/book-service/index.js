@@ -8,10 +8,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const DABook = require('./DABook');
 
 // Get all books
-app.get('/books', (req, res) => {
+app.get('/books', async (req, res) => {
     try {
         console.log('List books request received');
-        const books = DABook.getBooks();
+        const books = await DABook.getBooks();
         res.json(books);
     } catch (error) {
         console.log(error);
@@ -20,12 +20,12 @@ app.get('/books', (req, res) => {
 });
 
 // Add a new book
-app.post('/books', (req, res) => {
+app.post('/books',async (req, res) => {
     try {
         console.log('Add book request received');
         const { title, author } = req.body;
         const newBook = { id: books.length + 1, title, author };
-        DABook.addBook(title, author);
+        await DABook.addBook(title, author);
         res.status(201).json(newBook);
     } catch (error) {
         console.log(error);
