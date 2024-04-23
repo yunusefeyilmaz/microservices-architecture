@@ -1,0 +1,129 @@
+openapi: "3.0.0"
+info:
+  version: "1.0.0"
+  title: "Microservices API"
+  description: "API documentation for Microservices Project"
+servers:
+  - url: "http://127.0.0.1:8080"
+    description: "Local Server"
+paths:
+  /users:
+    get:
+      summary: "Get all users"
+      responses:
+        '200':
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/User"
+    post:
+      summary: "Create a new user"
+      requestBody:
+        description: "User object that needs to be added"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/User"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        '200':
+          description: "User created successfully"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+                    example: "User created successfully"
+        '500':
+          description: "Internal Server Error"
+  /books:
+    get:
+      summary: "Get all books"
+      responses:
+        '200':
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Book"
+    post:
+      summary: "Create a new book"
+      requestBody:
+        description: "Book object that needs to be added"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Book"
+      responses:
+        '200':
+          description: "Book created successfully"
+  /authors:
+    get:
+      summary: "Get all authors"
+      responses:
+        '200':
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Author"
+    post:
+      summary: "Create a new author"
+      requestBody:
+        description: "Author object that needs to be added"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Author"
+      responses:
+        '200':
+          description: "Author created successfully"
+components:
+  schemas:
+    User:
+      type: "object"
+      properties:
+        username:
+          type: "string"
+        email:
+          type: "string"
+      required:
+        - "username"
+        - "email"
+    Book:
+      type: "object"
+      properties:
+        title:
+          type: "string"
+        author:
+          type: "string"
+      required:
+        - "title"
+        - "author"
+    Author:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        nationality:
+          type: "string"
+      required:
+        - "name"
+        - "nationality"
