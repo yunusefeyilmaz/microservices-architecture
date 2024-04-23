@@ -24,9 +24,8 @@ app.post('/books',async (req, res) => {
     try {
         console.log('Add book request received');
         const { title, author } = req.body;
-        const newBook = { id: books.length + 1, title, author };
-        await DABook.addBook(title, author);
-        res.status(201).json(newBook);
+        const newBook = await DABook.addBook(title, author);
+        res.status(200).json(newBook);
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'Internal Server Error' });

@@ -28,7 +28,7 @@ const addBook = (title, author) => {
             if (error) {
                 return reject(error);
             }
-            return resolve(results);
+            return resolve({ title, author });
         });
     });
 }
