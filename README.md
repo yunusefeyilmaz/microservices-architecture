@@ -16,7 +16,7 @@ You need to have Node.js, npm, and PostgreSQL installed on your local machine. Y
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/yourusername/microservices-architecture.git
+   git clone https://github.com/yunusefeyilmaz/microservices-architecture.git
    ```
 2. Navigate to the project directory:
     ```sh
