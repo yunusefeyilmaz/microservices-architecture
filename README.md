@@ -1,3 +1,7 @@
+# About This Repository
+
+This repository hosts two versions of a software application designed to demonstrate and compare **Monolithic** and **Microservices** architectures. The aim is to provide a hands-on example showing how the same application functionality can be implemented in both architectural styles, highlighting the trade-offs and benefits of each approach.
+
 # Monolithic Architecture Project
 
 This project contains a Node.js application using Express.js framework that demonstrates a monolithic architecture for managing books, authors, and users. It includes basic CRUD operations and is designed to help understand how to build and structure a monolithic application. The application also features a simple load balancer that distributes incoming HTTP requests across two server instances.
